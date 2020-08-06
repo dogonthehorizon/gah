@@ -1,0 +1,87 @@
+name:                gah
+version:             0.1.0
+synopsis:            A simple Github Actions cli for the flumoxed developer.
+github:              dogonthehorizon/gah
+license:             MIT
+author:              Fernando Freire
+maintainer:          Fernando Frerei <dogonthehorizon@gmail.com>
+copyright:           2020 Fernando Freire
+category:            CLI
+
+ghc-options:
+  - -Wall
+  - -Wcompat
+  - -Wincomplete-record-updates
+  - -Wincomplete-uni-patterns
+  - -Wredundant-constraints
+  - -fno-warn-partial-type-signatures
+  - -fno-warn-name-shadowing
+  - -fwarn-tabs
+  - -fwarn-unused-imports
+  - -fwarn-missing-signatures
+  - -fwarn-incomplete-patterns
+
+default-extensions:
+  - BangPatterns
+  - DefaultSignatures
+  - DeriveFoldable
+  - DeriveFunctor
+  - DeriveGeneric
+  - DeriveLift
+  - DeriveTraversable
+  - EmptyCase
+  - FlexibleContexts
+  - FlexibleInstances
+  - FunctionalDependencies
+  - GeneralizedNewtypeDeriving
+  - InstanceSigs
+  - LambdaCase
+  - MultiParamTypeClasses
+  - MultiWayIf
+  - OverloadedStrings
+  - PatternSynonyms
+  - ScopedTypeVariables
+  - TemplateHaskell
+
+
+dependencies:
+  - base >= 4.7 && < 5
+  - mtl
+  - text
+
+library:
+  source-dirs: src
+  dependencies:
+    - req
+    - aeson
+    - modern-uri
+    - bytestring
+    - lens
+    - zip
+
+executables:
+  gah:
+    source-dirs:      app
+    main:             Main.hs
+    dependencies:
+      - gah
+      - envy
+
+#tests:
+  #gah-test:
+    #main: Tasty.hs
+    #source-dirs: test
+    #ghc-options:
+      #- -threaded
+      #- -rtsopts
+      #- -with-rtsopts=-N
+      #- -Wno-missing-signatures
+      #- -Wno-orphans
+    #dependencies:
+      #- gah
+      #- smallcheck
+      #- smallcheck-series
+      #- tasty
+      #- tasty-discover
+      #- tasty-hunit
+      #- tasty-smallcheck
