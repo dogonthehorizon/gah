@@ -31,9 +31,6 @@ userAgent = header "User-Agent" "gah/0.0.1"
 accept :: Option https
 accept = header "Accept" "application/vnd.github.v3+json"
 
-noEntries (Left _)  = False
-noEntries (Right _) = True
-
 -- TODO embed req in Gah monad via MonadHttp
 logs :: (MonadReader ctx m, HasApiToken ctx Text, MonadIO m) => m ()
 logs = do
@@ -44,4 +41,4 @@ logs = do
     let headers = userAgent <> accept <> oAuth2Token (T.encodeUtf8 token)
     reqBr GET url NoReqBody headers $ \r ->
       runConduitRes $
-        responseBodySource r .| unZipStream .| filterC noEntries .| CB.sinkFile "my-file.bin"
+        responseBodySource r .| unZipStream .| CB.sinkFile "my-file.bin"
