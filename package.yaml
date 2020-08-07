@@ -53,11 +53,14 @@ library:
   source-dirs: src
   dependencies:
     - req
+    - req-conduit
+    - conduit
+    - conduit-extra
     - aeson
     - modern-uri
     - bytestring
     - lens
-    - zip
+    - zip-stream
 
 executables:
   gah:
