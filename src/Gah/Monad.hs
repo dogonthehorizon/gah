@@ -3,7 +3,7 @@ module Gah.Monad where
 import Control.Lens           (camelCaseFields, makeLensesWith)
 import Control.Monad.IO.Class (MonadIO)
 import Control.Monad.Reader   (MonadReader, ReaderT)
-import Data.Text (Text)
+import Data.Text              (Text)
 
 data Context = Context {
     contextApiToken :: Text
