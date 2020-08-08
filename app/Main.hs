@@ -3,7 +3,7 @@ module Main where
 import Config               (GahConfig (..), getConfig)
 import Control.Monad.Reader (runReaderT)
 import Gah.Monad
-import Network.Github.Api   (logs)
+import Network.Github.Api   (logs, runs, workflow)
 
 
 main :: IO ()

@@ -61,6 +61,8 @@ library:
     - bytestring
     - lens
     - zip-stream
+    - text-show
+    - aeson-casing
 
 executables:
   gah:
