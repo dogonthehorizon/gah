@@ -1,19 +1,29 @@
 module Main where
 
-import           Config                     (GahConfig (..), getConfig)
---import Control.Monad.IO.Class (liftIO)
-import           Control.Monad.Reader       (runReaderT)
+import           Cli                    (Action (..), parseCliOpts, withInfo)
+import qualified Cli                    as CliOpts
+import           Config                 (GahConfig (..), getConfig)
+import           Control.Monad.IO.Class (liftIO)
+import           Control.Monad.Reader   (runReaderT)
+import           Data.Text              (Text)
 import           Gah.Monad
-import qualified Network.Github.Actions.Api as Actions
-import qualified Network.Github.Actions.Run as Run
-
--- TODO build CLI parser
-org = "armory"
-repo = "dinghy"
+import qualified Network.Github.Actions as Actions
+import           Options.Applicative    (execParser)
 
 main :: IO ()
-main = do
-  token <- gahApiToken <$> getConfig
-  flip runReaderT (Context token) $ runGah $ do
-    rId <- Run.id . head . Run.workflowRuns <$> Actions.runs org repo
-    Actions.logs org repo rId
+main = execParser (parseCliOpts `withInfo` "") >>= \opts ->
+  case CliOpts.action opts of
+    -- TODO consider moving to some other method
+    GetLogs -> do
+      token <- gahApiToken <$> getConfig
+      let org = CliOpts.org opts
+      let repo = CliOpts.repo opts
+      let actionFn = case CliOpts.workflow opts of
+                       Nothing  -> Actions.getLatestRunLogs
+                       Just wId -> Actions.getLatestLogsForWorkflow wId
+
+      flip runReaderT (Context token) $ runGah $ do
+        logAction <- actionFn org repo
+        case logAction of
+          Left e  -> liftIO . print $ (e :: Text) -- TODO better error handling
+          Right _ -> return ()
