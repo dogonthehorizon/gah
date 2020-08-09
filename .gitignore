@@ -79,3 +79,4 @@ tags
 
 # End of https://www.toptal.com/developers/gitignore/api/linux,git,vim,haskell
 *.cabal
+.github_token

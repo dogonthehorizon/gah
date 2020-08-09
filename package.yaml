@@ -52,17 +52,17 @@ dependencies:
 library:
   source-dirs: src
   dependencies:
-    - req
-    - req-conduit
+    - aeson
+    - aeson-casing
+    - bytestring
     - conduit
     - conduit-extra
-    - aeson
-    - modern-uri
-    - bytestring
     - lens
-    - zip-stream
+    - modern-uri
+    - req
+    - req-conduit
     - text-show
-    - aeson-casing
+    - zip-stream
 
 executables:
   gah:

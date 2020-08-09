@@ -1,0 +1,87 @@
+{-# LANGUAGE DataKinds #-}
+
+module Network.Github.Actions.Api where
+
+import           Codec.Archive.Zip.Conduit.UnZip (unZipStream)
+import           Codec.Archive.Zip.Conduit.Zip   (ZipEntry)
+import           Conduit                         (mapC, stdoutC)
+import           Control.Lens                    (view)
+import           Control.Monad                   (void)
+import           Control.Monad.Reader            (MonadReader, asks)
+import           Data.ByteString                 (ByteString)
+import           Data.Conduit                    (runConduitRes, (.|))
+import           Data.Text                       (Text)
+import qualified Data.Text.Encoding              as T
+import           Gah.Monad
+import           Network.Github.Actions.Run
+import           Network.Github.Actions.Workflow
+import           Network.HTTP.Req                (GET (..), MonadHttp,
+                                                  NoReqBody (..), Option,
+                                                  Scheme (Https), header, https,
+                                                  jsonResponse, oAuth2Token,
+                                                  req, reqBr, responseBody,
+                                                  (/:))
+import           Network.HTTP.Req.Conduit
+import           TextShow                        (showt)
+
+-- TODO support honoring rate limits
+
+-- | Url for github.
+github :: Text
+github = "api.github.com"
+
+-- | User agent to report to the Github api.
+-- TODO pull in actual version used for the UA string.
+userAgent :: Option https
+userAgent = header "User-Agent" "gah/0.0.1"
+
+-- | Default accept header for all Github requests.
+accept :: Option https
+accept = header "Accept" "application/vnd.github.v3+json"
+
+-- | The default set of headers used for all requests.
+-- TODO move into Internal module
+headers :: Text -> Option 'Https
+headers token = userAgent <> accept <> oAuth2Token (T.encodeUtf8 token)
+
+-- | Get information about a workflow for a given org/repo.
+workflow :: (MonadReader ctx m, HasApiToken ctx Text, MonadHttp m)
+         => Text
+         -> Text
+         -> Int
+         -> m Workflow
+workflow org repo wId = do
+  token <- asks (view apiToken)
+  let url = https github /: "repos" /: org /: repo /: "actions" /: "workflows" /: showt wId
+  responseBody <$> req GET url NoReqBody jsonResponse (headers token)
+
+-- | Get all runs for the given org/repo.
+runs :: (MonadReader ctx m, HasApiToken ctx Text, MonadHttp m)
+     => Text
+     -> Text
+     -> m RunResult
+runs org repo = do
+  token <- asks (view apiToken)
+  let url = https github /: "repos" /: org /: repo /: "actions" /: "runs"
+  responseBody <$> req GET url NoReqBody jsonResponse (headers token)
+
+-- | Retrieve logs for the given org/repo/runId and send them to STDOUT.
+--
+-- Logs themselves are sent back to the client as a Zip archive, so we use
+-- conduit here to stream in constant space and unpack to STDOUT.
+logs :: (MonadReader ctx m, HasApiToken ctx Text, MonadHttp m)
+     => Text
+     -> Text
+     -> Int
+     -> m ()
+logs org repo runId = do
+  token <- asks (view apiToken)
+  let url = https github /: "repos" /: org /: repo /: "actions" /: "runs" /: showt runId /: "logs"
+  reqBr GET url NoReqBody (headers token) $ \r ->
+    runConduitRes $
+      responseBodySource r .| void unZipStream .| mapC extractLogs .| stdoutC
+        where  extractLogs :: Either ZipEntry ByteString -> ByteString
+               -- Ignore left values because they only represent files names.
+               extractLogs (Left _)  = "" 
+               -- Pass through Right values because that's the content of the archive.
+               extractLogs (Right x) = x
