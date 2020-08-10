@@ -1,6 +1,23 @@
 # gah!
 
-`gah` is a Github Actions CLI written in Haskell for the flumoxed developer.
+`gah` is a Github Actions CLI for the flumoxed developer.
+
+### What's in a Name?
+
+GitHub Actions is a tool written in [Haskell], so taking the initials of each
+word you get `gah`, a common expression of exasperation.
+
+## Table of Contents
+
+* [Configuration](#configuration)
+* [Usage](#usage)
+    * [Getting Logs](#getting-logs)
+    * [Triggering Workflows](#triggering-workflows)
+    * [Re-Running Workflows](#re-running-workflows)
+    * [Cancelling Workflows](#cancelling-workflows)
+    * [Creating Secrets](#creating-secrets)
+    * [Deleting Secrets](#deleting-secrets)
+    * [Updating Secrets](#updating-secrets)
 
 ## Configuration
 
@@ -27,19 +44,56 @@ GAH_GITHUB_TOKEN=$(cat .github_token) gah logs my-org/my-repo latest
 
 ## Usage
 
-### Logs
+If this is your first time using `gah`, make sure you look at the `Configuration`
+section to make sure your environment is properly setup.
 
-Gah! Just gimme some logs for my repo in my organization:
+### Getting Logs
+
+__**Since: 0.1.0**__
+
+You can retrieve the latest logs for a given org/repo combination:
 
 ```bash
-gah just gimme logs for my-org my-repo
+gah logs --organization my-org --repository my-repo
 ```
 
-Alternatively, if you have no sense of humor:
+If your project supports multiple workflows, you can specify the desired workflow
+with the `--workflow` or `-w` flag:
 
 ```bash
-gah logs my-org my-repo latest
+gah logs --organization my-org --repository my-repo --workflow my-workflow
 ```
+
+Short flags are also available:
+
+```bash
+gah logs -o my-org -r my-repo -w my-workflow
+```
+
+### Triggering Workflows
+
+__**Since: ☢ planned, not yet implemented**__
+
+### Re-Running Workflows
+
+__**Since: ☢ planned, not yet implemented**__
+
+### Cancelling Workflows
+
+__**Since: ☢ planned, not yet implemented**__
+
+### Creating Secrets
+
+__**Since: ☢ planned, not yet implemented**__
+
+### Deleting Secrets
+
+__**Since: ☢ planned, not yet implemented**__
+
+### Updating Secrets
+
+__**Since: ☢ planned, not yet implemented**__
 
 [token]: https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token
 [gandalf]: https://i.imgflip.com/1mp8zb.gif
+[Haskell]: https://www.haskell.org/
