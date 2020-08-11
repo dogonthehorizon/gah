@@ -49,7 +49,7 @@ section to make sure your environment is properly setup.
 
 ### Getting Logs
 
-__**Since: 0.1.0**__
+__Since: 0.1.0__
 
 You can retrieve the latest logs for a given org/repo combination:
 
@@ -72,27 +72,27 @@ gah logs -o my-org -r my-repo -w my-workflow
 
 ### Triggering Workflows
 
-__**Since: ☢ planned, not yet implemented**__
+__Since: ☢ planned, not yet implemented__
 
 ### Re-Running Workflows
 
-__**Since: ☢ planned, not yet implemented**__
+__Since: ☢ planned, not yet implemented__
 
 ### Cancelling Workflows
 
-__**Since: ☢ planned, not yet implemented**__
+__Since: ☢ planned, not yet implemented__
 
 ### Creating Secrets
 
-__**Since: ☢ planned, not yet implemented**__
+__Since: ☢ planned, not yet implemented__
 
 ### Deleting Secrets
 
-__**Since: ☢ planned, not yet implemented**__
+__Since: ☢ planned, not yet implemented__
 
 ### Updating Secrets
 
-__**Since: ☢ planned, not yet implemented**__
+__Since: ☢ planned, not yet implemented__
 
 [token]: https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token
 [gandalf]: https://i.imgflip.com/1mp8zb.gif

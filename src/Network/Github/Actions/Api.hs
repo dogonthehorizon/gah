@@ -25,6 +25,9 @@ import           Network.HTTP.Req                (GET (..), MonadHttp,
                                                   (/:))
 import           Network.HTTP.Req.Conduit
 import           TextShow                        (showt)
+import qualified Paths_gah                 as Paths
+import Data.Version (showVersion)
+import qualified Data.ByteString.Char8 as B
 
 -- TODO consider splitting "Github" monad from "Gah" monad, or renaming.
 -- TODO support honoring rate limits
@@ -36,7 +39,7 @@ github = "api.github.com"
 -- | User agent to report to the Github api.
 -- TODO pull in actual version used for the UA string.
 userAgent :: Option https
-userAgent = header "User-Agent" "gah/0.0.1"
+userAgent = header "User-Agent" $ "gah/" <> (B.pack $ showVersion Paths.version)
 
 -- | Default accept header for all Github requests.
 accept :: Option https
