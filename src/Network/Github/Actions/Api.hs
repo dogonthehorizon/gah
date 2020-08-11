@@ -37,7 +37,6 @@ github :: Text
 github = "api.github.com"
 
 -- | User agent to report to the Github api.
--- TODO pull in actual version used for the UA string.
 userAgent :: Option https
 userAgent = header "User-Agent" $ "gah/" <> (B.pack $ showVersion Paths.version)
 
