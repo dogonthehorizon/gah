@@ -40,6 +40,9 @@ stack build --copy-bins
 This may take a while if you don't usually work with Haskell projects, feel
 free to grab a beverage of your choice and come back in 5-10 minutes.
 
+A future release will provide binaries for Mac and Linux, as well as Windows if
+it isn't too onerous to do.
+
 ## Configuration
 
 `gah` requires [personal access token][token] to function. It needs one for a
