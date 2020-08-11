@@ -1,6 +1,11 @@
 # gah!
 
-`gah` is a Github Actions CLI for the flumoxed developer.
+`gah` is a simple Github Actions CLI for the flumoxed developer.
+
+It aims to be simple by infering as much context as possible before making
+requests, while still allowing you to precisely define what information you
+need from the GitHub Actions API. The fully realized goal of `gah` is to
+provide straightforward workflow lifecycle management from jobs to secrets.
 
 ### What's in a Name?
 
@@ -9,6 +14,7 @@ word you get `gah`, a common expression of exasperation.
 
 ## Table of Contents
 
+* [Installation](#installation)
 * [Configuration](#configuration)
 * [Usage](#usage)
     * [Getting Logs](#getting-logs)
@@ -18,6 +24,21 @@ word you get `gah`, a common expression of exasperation.
     * [Creating Secrets](#creating-secrets)
     * [Deleting Secrets](#deleting-secrets)
     * [Updating Secrets](#updating-secrets)
+
+## Installation
+
+`gah` currently requires compilation from source to work. You will need the
+[`stack`] program to build this project.
+
+You can build and copy the binary for this project by running the following
+command:
+
+```bash
+stack build --copy-bins
+```
+
+This may take a while if you don't usually work with Haskell projects, feel
+free to grab a beverage of your choice and come back in 5-10 minutes.
 
 ## Configuration
 
@@ -97,3 +118,4 @@ __Since: ☢ planned, not yet implemented__
 [token]: https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token
 [gandalf]: https://i.imgflip.com/1mp8zb.gif
 [Haskell]: https://www.haskell.org/
+[`stack`]: https://docs.haskellstack.org/en/stable/README/
