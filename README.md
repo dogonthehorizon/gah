@@ -74,6 +74,7 @@ section to make sure your environment is properly setup.
 ### Getting Logs
 
 __Since: 0.1.0__
+__Updated: 0.2.0__
 
 You can retrieve the latest logs for a given org/repo combination:
 
@@ -88,10 +89,20 @@ with the `--workflow` or `-w` flag:
 gah logs --organization my-org --repository my-repo --workflow my-workflow
 ```
 
+If you'd like to find logs for a particular branch, you can inform `gah` with
+the `--branch` or `-b` flags:
+
+```
+gah logs --organization my-org --repository my-repo --branch my-branch
+```
+
+You can specify one or both of workflow and branch flags to filter results
+accordingly.
+
 Short flags are also available:
 
 ```bash
-gah logs -o my-org -r my-repo -w my-workflow
+gah logs -o my-org -r my-repo -w my-workflow -b my-branch
 ```
 
 ### Triggering Workflows

@@ -13,7 +13,8 @@ data CliOpts = CliOpts {
     action   :: Action,
     org      :: Text,
     repo     :: Text,
-    workflow :: Maybe Text
+    workflow :: Maybe Text,
+    branch   :: Maybe Text
   }
 
 gahVersion :: String
@@ -42,6 +43,13 @@ parseWorkflow = option text $
   <> metavar "WORKFLOW_NAME"
   <> help "The name of the workflow to inspect."
 
+parseBranch :: Parser Text
+parseBranch = option text $
+  short 'b'
+  <> long "branch"
+  <> metavar "BRANCH_NAME"
+  <> help "The name of the branch to inspect."
+
 parseLogs :: Parser Action
 parseLogs = pure GetLogs
 
@@ -55,6 +63,7 @@ parseCliOpts = CliOpts
   <*> parseOrg
   <*> parseRepo
   <*> optional parseWorkflow
+  <*> optional parseBranch
 
 -- | Parse a version flag.
 parseVersion :: Parser (a -> a)

@@ -18,9 +18,11 @@ main = execParser (parseCliOpts `withInfo` "") >>= \opts ->
       token <- gahApiToken <$> getConfig
       let org = CliOpts.org opts
       let repo = CliOpts.repo opts
-      let actionFn = case CliOpts.workflow opts of
-                       Nothing  -> Actions.getLatestRunLogs
-                       Just wId -> Actions.getLatestLogsForWorkflow wId
+      let actionFn = case (CliOpts.workflow opts, CliOpts.branch opts) of
+                       (Nothing, Nothing)  -> Actions.getLatestRunLogs
+                       (Just wId, Nothing) -> Actions.getLatestLogsForWorkflow wId
+                       (Nothing, Just b) -> Actions.getLatestLogsForBranch b
+                       (Just wId, Just b) -> Actions.getLatestLogsForWorkflowAndBranch wId b
 
       flip runReaderT (Context token) $ runGah $ do
         logAction <- actionFn org repo

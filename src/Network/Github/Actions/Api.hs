@@ -9,10 +9,12 @@ import           Control.Lens                    (view)
 import           Control.Monad                   (void)
 import           Control.Monad.Reader            (MonadReader, asks)
 import           Data.ByteString                 (ByteString)
+import qualified Data.ByteString.Char8           as B
 import           Data.Conduit                    (runConduitRes, (.|))
 import           Data.HashMap.Strict             (HashMap, fromList)
 import           Data.Text                       (Text)
 import qualified Data.Text.Encoding              as T
+import           Data.Version                    (showVersion)
 import           Gah.Monad
 import           Network.Github.Actions.Run      (RunResult)
 import qualified Network.Github.Actions.Run      as Run
@@ -24,10 +26,8 @@ import           Network.HTTP.Req                (GET (..), MonadHttp,
                                                   req, reqBr, responseBody,
                                                   (/:))
 import           Network.HTTP.Req.Conduit
+import qualified Paths_gah                       as Paths
 import           TextShow                        (showt)
-import qualified Paths_gah                 as Paths
-import Data.Version (showVersion)
-import qualified Data.ByteString.Char8 as B
 
 -- TODO consider splitting "Github" monad from "Gah" monad, or renaming.
 -- TODO support honoring rate limits
@@ -38,7 +38,7 @@ github = "api.github.com"
 
 -- | User agent to report to the Github api.
 userAgent :: Option https
-userAgent = header "User-Agent" $ "gah/" <> (B.pack $ showVersion Paths.version)
+userAgent = header "User-Agent" $ "gah/" <> (B.pack . showVersion $ Paths.version)
 
 -- | Default accept header for all Github requests.
 accept :: Option https
