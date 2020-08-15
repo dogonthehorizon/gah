@@ -9,7 +9,7 @@ provide straightforward workflow lifecycle management from jobs to secrets.
 
 ### What's in a Name?
 
-GitHub Actions is a tool written in [Haskell], so taking the initials of each
+`gah` is a GitHub Actions tool written in [Haskell], so taking the initials of each
 word you get `gah`, a common expression of exasperation.
 
 ## Table of Contents
@@ -74,6 +74,7 @@ section to make sure your environment is properly setup.
 ### Getting Logs
 
 __Since: 0.1.0__
+
 __Updated: 0.2.0__
 
 You can retrieve the latest logs for a given org/repo combination:
