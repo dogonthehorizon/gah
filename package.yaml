@@ -1,5 +1,5 @@
 name:                gah
-version:             0.1.0
+version:             0.2.0
 synopsis:            A simple Github Actions cli for the flumoxed developer.
 github:              dogonthehorizon/gah
 license:             MIT
@@ -81,10 +81,12 @@ executables:
       - optparse-applicative
     when:
       - condition: flag(static)
-        ops:
-          ghc-options:
+        ghc-options:
           - -threaded
           - -static
           - -O2
-          cc-options: -static
+          - -optl-static
+          - -optl-pthread
+          - -fPIC
+        cc-options: -static
         ld-options: -static -pthread
