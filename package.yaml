@@ -65,6 +65,12 @@ library:
     - unordered-containers
     - zip-stream
 
+flags:
+  static:
+    description: Build a static binary.
+    manual: true
+    default: false
+
 executables:
   gah:
     source-dirs:      app
@@ -73,3 +79,12 @@ executables:
       - gah
       - envy
       - optparse-applicative
+    when:
+      - condition: flag(static)
+        ops:
+          ghc-options:
+          - -threaded
+          - -static
+          - -O2
+          cc-options: -static
+        ld-options: -static -pthread

@@ -1,0 +1,30 @@
+name: release
+on:
+  push:
+    branches:
+      - refs/tags/*
+jobs:
+  release:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - macOS-latest
+    env:
+      CONFIG: "--enable-tests --enable-benchmarks"
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-haskell@v1.1
+        with:
+          enable-stack: true
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.stack
+          key: ${{ runner.os }}-${{ hashFiles('stack.yaml.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-
+      - run: |
+          stack build --system-ghc --split-objs --flag gah:static --copy-bins
+          # TODO add github release setup
