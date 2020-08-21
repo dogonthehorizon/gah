@@ -44,7 +44,7 @@ For macOS users:
 
 ```bash
 bash -c \
-  'curl -fsSL -o gah "https://github.com/dogonthehorizon/gah/releases/latest/download/gah-macOS-amd64"' \
+  'curl -fsSL -o gah "https://github.com/dogonthehorizon/gah/releases/latest/download/gah-macos-amd64"' \
   && chmod +x gah
 ```
 
