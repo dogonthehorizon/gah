@@ -75,7 +75,7 @@ it isn't too onerous to do.
 
 ## Configuration
 
-`gah` requires [personal access token][token] to function. It needs one for a
+`gah` requires a [personal access token][token] to function. It needs one for a
 few reasons:
 
 - Unauthenticated access to the GitHub API is capped at around 60 requests per
@@ -90,10 +90,10 @@ permissions at token creation time:
 
 Once you've created your token you can store it
 [somewhere secret, somewhere safe][gandalf], and reference it via the
-`GAH_GITHUB_TOKEN` environment variable. Here's a sample invocation:
+`GAH_API_TOKEN` environment variable. Here's a sample invocation:
 
 ```bash
-GAH_GITHUB_TOKEN=$(cat .github_token) gah logs my-org/my-repo latest
+GAH_API_TOKEN=$(cat .github_token) gah logs my-org/my-repo latest
 ```
 
 ## Usage
