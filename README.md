@@ -27,8 +27,38 @@ word you get `gah`, a common expression of exasperation.
 
 ## Installation
 
-`gah` currently requires compilation from source to work. You will need the
-[`stack`] program to build this project.
+### from GitHub
+
+`gah` can be installed from GitHub Releases. To install the latest version run
+the following commands.
+
+For Linux users:
+
+```bash
+bash -c \
+  'curl -fsSL -o gah "https://github.com/dogonthehorizon/gah/releases/latest/download/gah-linux-amd64"' \
+  && chmod +x gah
+```
+
+For macOS users:
+
+```bash
+bash -c \
+  'curl -fsSL -o gah "https://github.com/dogonthehorizon/gah/releases/latest/download/gah-macOS-amd64"' \
+  && chmod +x gah
+```
+
+If you want to install a specific release, you can naviate to the [releases page]
+and grab the URL for the desired release to download.
+
+You can then move the binary to somewhere in your environment's `$PATH`.
+
+_Note: at this time only Linux binaries are statically compiled._
+
+### from Source
+
+`gah` can optionally be compiled from source. You will need the [`stack`]
+program to build this project.
 
 You can build and copy the binary for this project by running the following
 command:
@@ -134,3 +164,4 @@ __Since: ☢ planned, not yet implemented__
 [gandalf]: https://i.imgflip.com/1mp8zb.gif
 [Haskell]: https://www.haskell.org/
 [`stack`]: https://docs.haskellstack.org/en/stable/README/
+[releases page]: https://github.com/dogonthehorizon/gah/releases
